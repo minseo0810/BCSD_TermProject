@@ -1,24 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import Champions from "./Champions";
+import Home from "./Home";
+import SummonerInfo from "./SummonerInfo";
+import logo from "./BCSDLOGO.png";
+import "./App.css";
 
 function App() {
+  const [summonerData, setSummonerData] = useState({
+    encryptedPUUID: "",
+    gameName: "",
+    tagLine: "",
+    profileIconId: "",
+    summonerLevel: "",
+  });
+
+  const updateSummonerData = (data) => {
+    setSummonerData(data);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div>
+        <h1>광고 받습니다</h1>
+        <header>
+          <div>
+            <NavLink to="/">
+              <img className="logoImg" src={logo} />
+            </NavLink>
+          </div>
+          <div className="header-nav">
+            <span>
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? "nav-active" : "")}
+              >
+                홈
+              </NavLink>
+            </span>
+            <span>
+              <NavLink
+                to="/champions"
+                className={({ isActive }) => (isActive ? "nav-active" : "")}
+              >
+                챔피언
+              </NavLink>
+            </span>
+            <span>
+              <NavLink to="/">게임 모드</NavLink>
+            </span>
+            <span>
+              <NavLink to="/">통계</NavLink>
+            </span>
+            <span>
+              <NavLink to="/">랭킹</NavLink>
+            </span>
+          </div>
+        </header>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home updateSummonerData={updateSummonerData} />}
+          ></Route>
+          <Route path="/champions" element={<Champions />}></Route>
+          <Route
+            path="/summonerInfo"
+            element={<SummonerInfo data={summonerData} />}
+          ></Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
