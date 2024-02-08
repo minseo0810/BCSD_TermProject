@@ -78,6 +78,38 @@ const SummonerInfo = ({ data }) => {
               }
             };
 
+            // 메인 룬 id 값 받아오기
+            const primaryStyle = playerDetails.perks.styles.find(
+              (style) => style.description === "primaryStyle"
+            ).style;
+            // 메인 룬 id의 세부 룬 id 받아오기
+            const primaryStyleDetails = playerDetails.perks.styles.find(
+              (style) => style.description === "primaryStyle"
+            ).selections[0].perk;
+
+            // 룬 데이터(json) 가져오기
+            const runesResponse = await axios.get(
+              "https://ddragon.leagueoflegends.com/cdn/14.2.1/data/ko_KR/runesReforged.json"
+            );
+            const runesData = runesResponse.data;
+
+            // 메인 룬의 링크
+            const mainRuneIcon = runesData
+              .find((rune) => rune.id === primaryStyle)
+              .slots[0].runes.find(
+                (rune) => rune.id === primaryStyleDetails
+              ).icon;
+
+            // 서브 룬 id 값 받아오기
+            const subStyle = playerDetails.perks.styles.find(
+              (style) => style.description === "subStyle"
+            ).style;
+
+            // 서브 룬의 링크
+            const subRuneIcon = runesData.find(
+              (rune) => rune.id === subStyle
+            ).icon;
+
             // 게임 진행한 정보를 저장(졸라 많다리)
             const resultData = {
               win: playerDetails.win,
@@ -90,7 +122,6 @@ const SummonerInfo = ({ data }) => {
               gameMode: matchDetailResponse.data.info.gameMode,
               gameCreation: matchDetailResponse.data.info.gameCreation,
               gameDuration: matchDetailResponse.data.info.gameDuration,
-              runes: playerDetails.runes,
               championImage: `https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${playerDetails.championName}.png`,
               summonerSpells: [
                 `https://ddragon.leagueoflegends.com/cdn/11.12.1/img/spell/${getSpellKeyById(
@@ -108,6 +139,10 @@ const SummonerInfo = ({ data }) => {
                 `https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${playerDetails.item4}.png`,
                 `https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${playerDetails.item5}.png`,
                 `https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${playerDetails.item6}.png`,
+              ],
+              runes: [
+                `https://ddragon.leagueoflegends.com/cdn/img/${mainRuneIcon}`,
+                `https://ddragon.leagueoflegends.com/cdn/img/${subRuneIcon}`,
               ],
             };
 
@@ -158,50 +193,72 @@ const SummonerInfo = ({ data }) => {
               className={`result ${result.win ? "win" : "lose"}`}
             >
               <table>
-                <tr>
-                  <th>
-                    {result.gameMode === " CLASSIC"
-                      ? "소환사의 협곡"
-                      : "무작위 총력전"}
-                  </th>
-                  <th>
-                    <table>
-                      <tr>
-                        <th rowspan="2">
-                          <img src={result.championImage} />
-                        </th>
-                        <th>
-                          <img src={result.summonerSpells[0]} />
-                        </th>
-                      </tr>
-                      <tr>
-                        <th>
-                          <img src={result.summonerSpells[1]} />
-                        </th>
-                      </tr>
-                    </table>
-                  </th>
-                </tr>
-              </table>
+                <tbody>
+                  <tr>
+                    <th>
+                      {result.gameMode === " CLASSIC"
+                        ? "소환사의 협곡"
+                        : "무작위 총력전"}
+                    </th>
+                    <th>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <th rowSpan="2">
+                              <img src={result.championImage} />
+                            </th>
+                            <th>
+                              <img src={result.summonerSpells[0]} />
+                            </th>
 
-              <span>
-                {result.win ? "승리" : "패배"}
-                <br></br>
-                {Math.floor(result.gameDuration / 60)}분{" "}
-                {result.gameDuration % 60}초
-              </span>
-              <span>
-                {result.kills} / {result.deaths}/ {result.assists}
-              </span>
-              <p>
-                {((result.kills + result.assists) / result.deaths).toFixed(2)} :
-                1 평점
-              </p>
-              <div className="items">
-                {result.items.map((item, index) => (
-                  <img src={item} alt={`Item ${index + 1}`} />
-                ))}
-              </div>
+                            <th>
+                              <img src={result.runes[0]} />
+                            </th>
+                            <th>
+                              {result.kills} / {result.deaths}/ {result.assists}
+                            </th>
+                          </tr>
+                          <tr>
+                            <th>
+                              <img src={result.summonerSpells[1]} />
+                            </th>
+                            <th>
+                              <img src={result.runes[1]} />
+                            </th>
+                            <th>
+                              {(
+                                (result.kills + result.assists) /
+                                result.deaths
+                              ).toFixed(2)}{" "}
+                              : 1 평점
+                            </th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      {result.win ? "승리" : "패배"}
+                      <br></br>
+                      {Math.floor(result.gameDuration / 60)}분{" "}
+                      {result.gameDuration % 60}초
+                    </th>
+                    <th>
+                      {result.items.map((item, index) =>
+                        // 이미지 링크가 유효하면 렌더링
+                        item ? (
+                          <img
+                            key={index}
+                            src={item}
+                            alt={`Item ${index + 1}`}
+                          />
+                        ) : null
+                      )}
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           ))}
         </div>

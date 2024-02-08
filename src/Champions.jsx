@@ -1,29 +1,49 @@
 import React, { useState, useEffect } from "react";
+import "./Champions.css";
 
-const getChampions = async () => {
-  const response = await fetch(
-    "https://ddragon.leagueoflegends.com/cdn/12.5.1/data/en_US/champion.json"
-  );
-  const data = await response.json();
-  return data.data;
-};
-
-const Champions = () => {
-  const [champions, setChampions] = useState({});
+const ChampionsList = () => {
+  const [championDetails, setChampionDetails] = useState([]);
 
   useEffect(() => {
-    getChampions().then((data) => setChampions(data));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://ddragon.leagueoflegends.com/cdn/14.2.1/data/ko_KR/champion.json"
+        );
+        const data = await response.json();
+        const details = Object.values(data.data).map((champion) => ({
+          name: champion.name,
+          image: `https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${champion.image.full}`,
+        }));
+        // 이름을 가나다순으로 정렬
+        details.sort((a, b) => a.name.localeCompare(b.name));
+        setChampionDetails(details);
+      } catch (error) {
+        console.error("오류 발생:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div>
-      <ul>
-        {Object.keys(champions).map((key) => (
-          <li key={key}>{champions[key].name}</li>
-        ))}
-      </ul>
+      {championDetails.map((details, index) => (
+        <table class="championItem">
+          <tbody>
+            <tr>
+              <td>
+                <img src={details.image} alt={details.name} />
+              </td>
+            </tr>
+            <tr>
+              <td>{details.name}</td>
+            </tr>
+          </tbody>
+        </table>
+      ))}
     </div>
   );
 };
 
-export default Champions;
+export default ChampionsList;
