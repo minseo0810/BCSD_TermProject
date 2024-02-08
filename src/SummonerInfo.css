@@ -18,7 +18,7 @@
 .level {
   position: absolute;
   bottom: 0px; /* 아이콘 하단으로부터 거리 */
-  left: 50%; /* 중앙 정렬 */
+  left: 50%;
   transform: translateX(-50%); /* 정확한 중앙 정렬을 위해 */
   color: white;
   background-color: #1a1a1a;
@@ -56,14 +56,15 @@
 .result {
   padding: 10px;
   color: white;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
   margin: 10px auto;
-  width: 150px;
+  width: 1000px;
 }
 
 .win {
-  background-color: #3498db;
+  background-color: #3498db80;
 }
 
 .lose {

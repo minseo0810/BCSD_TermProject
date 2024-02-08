@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
 import banner from "./BCSD.png";
+import * as api from "./api.jsx";
 
 const Home = ({ updateSummonerData }) => {
   const navigate = useNavigate();
@@ -13,22 +14,6 @@ const Home = ({ updateSummonerData }) => {
   const [tagLine, setTagLine] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-
-  //첫번째 API 불러오기
-  const getFirstApiUrl = (gameName, tagLine) => {
-    return `/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(
-      gameName
-    )}/${encodeURIComponent(tagLine)}?api_key=${
-      process.env.REACT_APP_RIOT_API_KEY
-    }`;
-  };
-
-  //두 번째 API 불러오기
-  const getSecondApiUrl = (puuid) => {
-    return `https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${encodeURIComponent(
-      puuid
-    )}?api_key=${process.env.REACT_APP_RIOT_API_KEY}`;
-  };
 
   // 로컬 스토리지에서 검색 기록 로드
   useEffect(() => {
@@ -74,19 +59,30 @@ const Home = ({ updateSummonerData }) => {
     }
   };
 
-  //검색 버튼 클릭시 또는 로컬스토리지 데이터 선택시 작동
+  // 검색 버튼 클릭시 또는 로컬스토리지 데이터 선택시 작동
   const handleSearch = async (searchValue = inputValue) => {
     setShowHistory(false);
-    const [name, line] = searchValue.split("#");
-    if (!name || !line) return;
 
-    updateSearchHistory(searchValue); // 검색 기록 업데이트
+    // searchValue가 문자열이 아니거나 undefined, null인 경우 예외 처리
+    if (typeof searchValue !== "string" || !searchValue.trim()) {
+      console.error("검색어가 올바르지 않습니다.");
+      return;
+    }
+
+    const [name, line] = searchValue.split("#");
+    if (!name || !line) {
+      console.error("올바른 형식의 검색어가 아닙니다.");
+      return;
+    }
 
     try {
-      const response = await axios.get(getFirstApiUrl(name, line));
+      const response = await axios.get(api.getSummonerByRiotId(name, line));
       setEncryptedPUUID(response.data.puuid);
       setGameName(response.data.gameName);
       setTagLine(response.data.tagLine);
+
+      // 검색이 성공했을 때만 로컬 스토리지에 데이터 저장
+      updateSearchHistory(searchValue);
     } catch (error) {
       console.error("첫 번째 API 요청 중 오류 발생:", error);
     }
@@ -98,7 +94,9 @@ const Home = ({ updateSummonerData }) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(getSecondApiUrl(encryptedPUUID));
+        const response = await axios.get(
+          api.getSummonerByPUUID(encryptedPUUID)
+        );
         const data = {
           encryptedPUUID,
           gameName,
