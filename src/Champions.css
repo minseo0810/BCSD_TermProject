@@ -1,3 +1,53 @@
 .championItem {
   display: inline-block;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.championsFrame {
+  padding-top: 10px;
+  display: flex;
+  background-color: black;
+  color: white;
+}
+
+.championList {
+  width: 60%;
+  background-color: #1a1a1a;
+}
+
+.championTags {
+  width: 50%;
+
+  background-color: #1a1a1a;
+}
+
+.championTags button {
+  margin-right: 5px;
+  margin-bottom: 10px;
+  font-size: 25px;
+  width: 100px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #e6e6fa;
+  font-weight: bold;
+  color: #785bf570;
+}
+
+.championTags button.click {
+  font-weight: bold;
+  background-color: #785bf5;
+  color: white;
+}
+
+.filteredChampionImages {
+  width: 100%;
+  display: inline-block;
+}
+.filteredChampionItem {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 600;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import Champions from "./Champions";
+import ChampionsDetails from "./ChampionsDetails";
 import Home from "./Home";
 import SummonerInfo from "./SummonerInfo";
 import logo from "./BCSDLOGO.png";
@@ -18,6 +19,9 @@ function App() {
   const updateSummonerData = (data) => {
     setSummonerData(data);
   };
+
+  const [championName, setChampionName] = useState("");
+
   return (
     <BrowserRouter>
       <div>
@@ -61,10 +65,17 @@ function App() {
             path="/"
             element={<Home updateSummonerData={updateSummonerData} />}
           ></Route>
-          <Route path="/champions" element={<Champions />}></Route>
+          <Route
+            path="/champions"
+            element={<Champions setChampionName={setChampionName} />} // 추가
+          ></Route>
           <Route
             path="/summonerInfo"
             element={<SummonerInfo data={summonerData} />}
+          ></Route>
+          <Route
+            path="/champions/:championName"
+            element={<ChampionsDetails />}
           ></Route>
         </Routes>
       </div>

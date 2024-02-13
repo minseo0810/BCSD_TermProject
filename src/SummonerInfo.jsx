@@ -5,7 +5,7 @@ import * as api from "./api.jsx";
 
 const SummonerInfo = ({ data }) => {
   const { encryptedPUUID, gameName, tagLine, profileIconId, summonerLevel } =
-    data;
+    data || {};
   const [recentMatchResults, setRecentMatchResults] = useState([]);
   const [matchData, setMatchData] = useState({
     win: false,
@@ -25,7 +25,7 @@ const SummonerInfo = ({ data }) => {
   useEffect(() => {
     const getRecentMatchResults = async () => {
       try {
-        const matchListResponse = { data: ["KR_6931963608"] };
+        const matchListResponse = { data: ["KR_6944034636"] };
         /*
         await axios.get(
           api.getRecentMatches(encryptedPUUID)
@@ -195,17 +195,24 @@ const SummonerInfo = ({ data }) => {
               <table>
                 <tbody>
                   <tr>
-                    <th>
+                    <th
+                      className={`result ${
+                        result.win ? "winText" : "loseText"
+                      }`}
+                    >
                       {result.gameMode === " CLASSIC"
                         ? "소환사의 협곡"
                         : "무작위 총력전"}
                     </th>
                     <th>
-                      <table>
+                      <table className="infoImg">
                         <tbody>
                           <tr>
-                            <th rowSpan="2">
-                              <img src={result.championImage} />
+                            <th rowSpan="2" className="infoChampionImg">
+                              <img
+                                src={result.championImage}
+                                style={{ width: "100px", height: "100px" }}
+                              />
                             </th>
                             <th>
                               <img src={result.summonerSpells[0]} />
@@ -238,23 +245,23 @@ const SummonerInfo = ({ data }) => {
                     </th>
                   </tr>
                   <tr>
-                    <th>
+                    <th className="infoTime">
                       {result.win ? "승리" : "패배"}
                       <br></br>
                       {Math.floor(result.gameDuration / 60)}분{" "}
                       {result.gameDuration % 60}초
                     </th>
-                    <th>
-                      {result.items.map((item, index) =>
-                        // 이미지 링크가 유효하면 렌더링
-                        item ? (
-                          <img
-                            key={index}
-                            src={item}
-                            alt={`Item ${index + 1}`}
-                          />
-                        ) : null
-                      )}
+                    <th className="infoItemas">
+                      {result.items.map((item, index) => (
+                        <span
+                          key={index}
+                          className={` ${
+                            item.endsWith("/0.png") ? "infoNotItem" : "infoItem"
+                          }`}
+                        >
+                          <img src={item} />
+                        </span>
+                      ))}
                     </th>
                   </tr>
                 </tbody>
