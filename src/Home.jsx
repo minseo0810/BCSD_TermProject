@@ -116,66 +116,69 @@ const Home = ({ updateSummonerData }) => {
   }, [encryptedPUUID, gameName, tagLine, updateSummonerData, navigate]);
 
   return (
-    <div className="main">
-      <div>
-        <img className="banner-img" src={banner} alt="BCSD Logo" />
-      </div>
-      <div className="search-section">
-        <table className="search-table">
-          <tbody>
-            <tr>
-              <td>
-                <label className="input-label">지역</label>
-              </td>
-              <td>
-                <label className="input-label">검색</label>
-              </td>
-              <td rowSpan="2">
-                <button className="search-button" onClick={handleSearch}>
-                  .BCSD
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <select
-                  className="region-select"
-                  value={region}
-                  onChange={(e) => setRegion(e.target.value)}
+    <>
+      <div className="main">
+        <div>
+          <img className="banner-img" src={banner} alt="BCSD Logo" />
+        </div>
+        <div className="search-section">
+          <table className="search-table">
+            <tbody>
+              <tr>
+                <td>
+                  <label className="input-label">지역</label>
+                </td>
+                <td>
+                  <label className="input-label">검색</label>
+                </td>
+                <td rowSpan="2">
+                  <button className="search-button" onClick={handleSearch}>
+                    .BCSD
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <select
+                    className="region-select"
+                    value={region}
+                    onChange={(e) => setRegion(e.target.value)}
+                  >
+                    <option value="Korea">Korea</option>{" "}
+                    {/* 지역 값도 변수로 API를 사용할 수 있으나 Proxy 문제로 인해 지역은 Korea 또는 Asia로 통일 */}
+                  </select>
+                </td>
+                <td>
+                  <input
+                    className={`search-input ${inputValue ? "filled" : ""}`}
+                    type="text"
+                    placeholder="플레이어 이름 + #KR1"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    onClick={handleInputClick}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {showHistory && (
+            <div className="search-history-container">
+              {searchHistory.map((history, index) => (
+                <div
+                  key={index}
+                  className="search-history-item"
+                  onClick={() => handleSearchHistoryClick(history)}
                 >
-                  <option value="Korea">Korea</option>{" "}
-                  {/* 지역 값도 변수로 API를 사용할 수 있으나 Proxy 문제로 인해 지역은 Korea 또는 Asia로 통일 */}
-                </select>
-              </td>
-              <td>
-                <input
-                  className={`search-input ${inputValue ? "filled" : ""}`}
-                  type="text"
-                  placeholder="플레이어 이름 + #KR1"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  onClick={handleInputClick}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {showHistory && (
-          <div className="search-history-container">
-            {searchHistory.map((history, index) => (
-              <div
-                key={index}
-                className="search-history-item"
-                onClick={() => handleSearchHistoryClick(history)}
-              >
-                {history}
-              </div>
-            ))}
-          </div>
-        )}
+                  {history}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <h1>여기도 광고 받습니다</h1>
+    </>
   );
 };
 

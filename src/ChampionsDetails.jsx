@@ -61,27 +61,49 @@ const ChampionsDetails = () => {
   console.log(championDetails);
   return (
     <div className="championDetailsFrame">
-      <div>{championDetails.title}</div>
-      <img
-        src={`http://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${championDetails.image.full}`}
-        alt={`${championDetails.name} 이미지`}
-      />
-      <p>{championDetails.lore}</p>
-
-      <h2>스킬</h2>
-      {championDetails.spells.map((spell, index) => (
-        <div key={index}>
-          <img
-            src={spell}
-            alt={`Spell ${index + 1}`}
-            style={{ width: "50px", height: "50px" }}
-          />
-          <p>
-            <strong>{championDetails.spellsName[index]}</strong>:{" "}
-            {championDetails.spellsDescription[index]}
-          </p>
+      <div className="championDetailsMain">
+        <div>
+          <span className="name">{championDetails.name}</span>
+          <span className="title"> ({championDetails.title})</span>
         </div>
-      ))}
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  className="championImg"
+                  src={`http://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${championDetails.image.full}`}
+                  alt={`${championDetails.name} 이미지`}
+                />
+              </td>
+              <td className="championDescriptiont">{championDetails.lore}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div className="skillTitle">스킬</div>
+        {championDetails.spells.map((spell, index) => (
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <img
+                    className="skillImg"
+                    src={spell}
+                    alt={`Spell ${index + 1}`}
+                  />
+                </td>
+                <td className="spellName">
+                  {championDetails.spellsName[index]}
+                </td>
+                <td className="spellsDescription">
+                  {championDetails.spellsDescription[index]}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ))}
+      </div>
     </div>
   );
 };

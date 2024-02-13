@@ -1,8 +1,7 @@
 .main {
   text-align: center;
   background-color: black;
-  width: 100vw;
-  height: 1000px;
+  padding-bottom: 300px;
 }
 
 .search-section {
