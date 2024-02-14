@@ -25,12 +25,9 @@ const SummonerInfo = ({ data }) => {
   useEffect(() => {
     const getRecentMatchResults = async () => {
       try {
-        const matchListResponse = { data: ["KR_6944034636"] };
-        /*
-        await axios.get(
+        const matchListResponse = await axios.get(
           api.getRecentMatches(encryptedPUUID)
         );
-        */
 
         const results = await Promise.all(
           matchListResponse.data.map(async (recentMatchId) => {
