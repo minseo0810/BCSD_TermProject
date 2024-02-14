@@ -71,6 +71,12 @@
 }
 .winText {
   color: #3498db;
+
+  width: 200px;
+  height: 80px;
+  padding-right: 50px;
+  padding-left: 50px;
+  text-align: left;
 }
 .loseText {
   color: #e74c3c;
@@ -101,7 +107,7 @@
 }
 .infoNotItem {
   border-radius: 20px;
-  background-color: #e74c3c90;
+  background-color: #1a1a1a40;
   width: 64px;
   padding-top: 32px;
   display: inline-block;
