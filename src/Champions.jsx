@@ -59,7 +59,7 @@ const Champions = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td>{details.name}</td>
+                  <td className="">{details.name}</td>
                 </tr>
               </tbody>
             </table>

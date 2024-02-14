@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import Champions from "./Champions";
 import ChampionsDetails from "./ChampionsDetails";
 import Home from "./Home";
+import Items from "./Items";
 import SummonerInfo from "./SummonerInfo";
 import logo from "./BCSDLOGO.png";
 import "./App.css";
+import ItemsDetails from "./ItemsDetails";
 
 function App() {
   const [summonerData, setSummonerData] = useState({
@@ -19,8 +21,6 @@ function App() {
   const updateSummonerData = (data) => {
     setSummonerData(data);
   };
-
-  const [championName, setChampionName] = useState("");
 
   return (
     <BrowserRouter>
@@ -50,6 +50,14 @@ function App() {
               </NavLink>
             </span>
             <span>
+              <NavLink
+                to="/items"
+                className={({ isActive }) => (isActive ? "nav-active" : "")}
+              >
+                아이템
+              </NavLink>
+            </span>
+            <span>
               <NavLink to="/">게임 모드</NavLink>
             </span>
             <span>
@@ -65,17 +73,17 @@ function App() {
             path="/"
             element={<Home updateSummonerData={updateSummonerData} />}
           ></Route>
-          <Route
-            path="/champions"
-            element={<Champions setChampionName={setChampionName} />} // 추가
-          ></Route>
-          <Route
-            path="/summonerInfo"
-            element={<SummonerInfo data={summonerData} />}
-          ></Route>
+          <Route path="/champions" element={<Champions />}></Route>
           <Route
             path="/champions/:championName"
             element={<ChampionsDetails />}
+          ></Route>
+
+          <Route path="/items" element={<Items />}></Route>
+          <Route path="/items/:itemName" element={<ItemsDetails />}></Route>
+          <Route
+            path="/summonerInfo"
+            element={<SummonerInfo data={summonerData} />}
           ></Route>
         </Routes>
       </div>

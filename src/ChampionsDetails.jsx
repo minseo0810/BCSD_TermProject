@@ -58,13 +58,12 @@ const ChampionsDetails = () => {
     fetchData();
   }, [championName]);
 
-  console.log(championDetails);
   return (
     <div className="championDetailsFrame">
       <div className="championDetailsMain">
         <div>
-          <span className="name">{championDetails.name}</span>
-          <span className="title"> ({championDetails.title})</span>
+          <span className="championName">{championDetails.name}</span>
+          <span className="championTitle"> ({championDetails.title})</span>
         </div>
         <table>
           <tbody>
