@@ -1,5 +1,3 @@
-import axios from "axios";
-
 // gameName과 tagLine을 이용해 puuid를 받아옴
 export const getSummonerByRiotId = (gameName, tagLine) => {
   return `/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(

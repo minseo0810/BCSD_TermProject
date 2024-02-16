@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./SummonerInfo.css";
+import "./css/SummonerInfo.css";
 import * as api from "./api.jsx";
 
 const SummonerInfo = ({ data }) => {

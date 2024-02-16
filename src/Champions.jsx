@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Champions.css";
+import "./css/Champions.css";
 
 const Champions = () => {
   const [championDetails, setChampionDetails] = useState([]);

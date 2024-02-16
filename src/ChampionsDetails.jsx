@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./ChampionsDetails.css";
+import "./css/ChampionsDetails.css";
 
 const ChampionsDetails = () => {
   const { championName } = useParams();

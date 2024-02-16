@@ -6,7 +6,7 @@ import Home from "./Home";
 import Items from "./Items";
 import SummonerInfo from "./SummonerInfo";
 import logo from "./BCSDLOGO.png";
-import "./App.css";
+import "./css/App.css";
 import ItemsDetails from "./ItemsDetails";
 
 function App() {

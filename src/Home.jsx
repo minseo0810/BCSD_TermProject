@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Home.css";
+import "./css/Home.css";
 import banner from "./BCSD.png";
 import * as api from "./api.jsx";
 
