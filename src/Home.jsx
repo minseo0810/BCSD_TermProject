@@ -65,13 +65,13 @@ const Home = ({ updateSummonerData }) => {
 
     // searchValue가 문자열이 아니거나 undefined, null인 경우 예외 처리
     if (typeof searchValue !== "string" || !searchValue.trim()) {
-      console.error("검색어가 올바르지 않습니다.");
+      alert("검색어가 올바르지 않습니다.");
       return;
     }
 
     const [name, line] = searchValue.split("#");
     if (!name || !line) {
-      console.error("올바른 형식의 검색어가 아닙니다.");
+      alert("올바른 형식의 검색어가 아닙니다.");
       return;
     }
 
